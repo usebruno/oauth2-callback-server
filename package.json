@@ -1,0 +1,19 @@
+{
+  "name": "@usebruno/oauth2-callback-server",
+  "version": "1.0.0",
+  "description": "Simple OAuth2 callback server for Bruno",
+  "main": "server.js",
+  "bin": {
+    "oauth2-callback-server": "./server.js"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["oauth2", "callback", "bruno"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "get-port": "^7.1.0"
+  }
+}
+
