@@ -4,7 +4,8 @@
   "description": "Simple OAuth2 callback server for Bruno",
   "main": "server.js",
   "bin": {
-    "oauth2-callback-server": "./server.js"
+    "oauth2-callback-server": "./server.js",
+    "@usebruno/oauth2-callback-server": "./server.js"
   },
   "scripts": {
     "start": "node server.js"
@@ -16,4 +17,3 @@
     "get-port": "^7.1.0"
   }
 }
-
