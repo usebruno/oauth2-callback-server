@@ -12,6 +12,7 @@ Usage:
   npx @usebruno/oauth2-callback-server [options]
 
 Options:
+  -l, --path <string>    Path to listen for (default: /callback)
   -p, --port <number>    Port number (default: 8090, or next available)
   -h, --help            Show this help message
 
@@ -19,6 +20,8 @@ Examples:
   npx @usebruno/oauth2-callback-server
   npx @usebruno/oauth2-callback-server --port 8090
   npx @usebruno/oauth2-callback-server -p 8090
+  npx @usebruno/oauth2-callback-server -p 8090 --path /login
+  npx @usebruno/oauth2-callback-server -l /login
   `);
 };
 
@@ -27,6 +30,10 @@ let values;
 try {
   ({ values } = parseArgs({
     options: {
+      path: {
+        type: 'string',
+        short: ''
+      },
       port: {
         type: 'string',
         short: 'p'
@@ -61,6 +68,11 @@ if (values.port) {
     console.error('Error: Invalid port number. Port must be between 1 and 65535.');
     process.exit(1);
   }
+}
+
+let callbackPath = '/callback';
+if (values.path) {
+  callbackPath = values.path;
 }
 
 const htmlContent = `<!doctype html>
@@ -102,7 +114,7 @@ async function startServer() {
     }
 
     const server = http.createServer((req, res) => {
-      if (req.url.startsWith('/callback')) {
+      if (req.url.startsWith(callbackPath)) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(htmlContent);
       } else {
@@ -119,7 +131,7 @@ async function startServer() {
 
     // Start listening
     server.listen(PORT, '127.0.0.1', () => {
-      console.log(`OAuth2 callback server running at http://127.0.0.1:${PORT}/callback`);
+      console.log(`OAuth2 callback server running at http://127.0.0.1:${PORT}${callbackPath}`);
     });
   } catch (err) {
     console.error(`Error: ${err.message}`);
